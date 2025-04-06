@@ -1,0 +1,26 @@
+pkgbase = dam
+	pkgdesc = A daemon for streamlining photo imports into structured storage.
+	pkgver = r16.4096beb
+	pkgrel = 2
+	url = https://github.com/alessandroberna/dam
+	arch = x86_64
+	arch = i686
+	arch = armv7h
+	arch = aarch64
+	arch = riscv64
+	arch = ppc64
+	arch = ppc64le
+	arch = mips
+	arch = mips64
+	arch = mips64el
+	arch = mipsel
+	license = AGPL-3.0-only
+	makedepends = go
+	makedepends = git
+	depends = glibc
+	source = git+https://github.com/alessandroberna/dam.git
+	source = dam.service
+	b2sums = SKIP
+	b2sums = ca5146c59aa61ad33807ef7fc5324897153133f19666148a7e57a7944d423fbcd6d2b294cbeb49627b9d0e8399a1d06e3d0a6c8af99a1980aa21a2dc6c75132c
+
+pkgname = dam
