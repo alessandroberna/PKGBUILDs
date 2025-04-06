@@ -1,0 +1,42 @@
+#Maintainer: Alessandro Bernardello <aleberna at erine dot eu>
+# shellcheck shell=bash disable=SC2034,SC2154
+
+# this PKGBUILD is for personal usage, the program is still missing some critical features
+# and as such the bundled service file is incomplete
+# this is not ready for production use 
+pkgname=dam
+pkgver=r16.4096beb
+pkgrel=1
+pkgdesc="A daemon for streamlining photo imports into structured storage."
+arch=('x86_64' 'i686' 'armv7h' 'aarch64' 'riscv64' 'ppc64' 'ppc64le' 'mips' 'mips64' 'mips64el' 'mipsel')
+url="https://github.com/alessandroberna/dam"
+license=('AGPL-3.0-only')
+depends=("glibc")
+makedepends=("go" "git")
+source=("git+https://github.com/alessandroberna/dam.git"
+        "dam.service"
+)
+b2sums=('SKIP'
+        '6c9f854855cf366eb47847f90c8ed38c531a71ef329575863cd570c5dc46849e5f34ae6549ec214652c1413debdf512646775fd163e149b5c89e99511644edf2')
+
+build() {
+    export CGO_CPPFLAGS="${CPPFLAGS}"
+    export CGO_CFLAGS="${CFLAGS}"
+    export CGO_CXXFLAGS="${CXXFLAGS}"
+    export CGO_LDFLAGS="${LDFLAGS}"
+    export GOFLAGS="-buildmode=pie -trimpath -ldflags=-linkmode=external -mod=readonly -modcacherw"
+    go -C "${srcdir}/dam" build -o dam
+}
+
+pkgver() {
+  cd "${srcdir}/dam" || exit 1
+  ( set -o pipefail
+    git describe --long --abbrev=7 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short=7 HEAD)"
+  )
+}
+
+package() {
+    install -Dm755 "$srcdir/dam/dam" "$pkgdir/usr/bin/dam"
+    install -Dm644 dam.service "$pkgdir/usr/lib/systemd/system/dam.service"
+}

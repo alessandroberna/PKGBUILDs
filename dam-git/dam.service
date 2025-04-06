@@ -1,0 +1,24 @@
+[Unit]
+Description=A daemon for streamlining photo imports into structured storage.
+Documentation=https://github.com/alessandroberna/dam
+After=local-fs.target
+
+# dam does not have the ability to read configuration files yet. 
+# until then, source and destination directories are hardcoded in the service 
+# this is not production ready, and the package won't be published on the AUR until i add the feature and fix this. 
+[Service]
+Type=simple
+# not final. user will be changed in a future version
+User=nextcloud
+Group=nextcloud
+Restart=always
+RestartSec=1
+ExecStart=/usr/bin/dam -d source_dir dest_dir
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+NoNewPrivileges=true
+PrivateDevices=true
+
+[Install]
+WantedBy=multi-user.target
