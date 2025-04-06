@@ -32,7 +32,7 @@ build() {
 }
 
 pkgver() {
-  cd glance || exit 1
+  cd "${srcdir}/glance" || exit 1
   git describe --long --tags --abbrev=7 | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
