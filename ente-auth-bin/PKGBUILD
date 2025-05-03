@@ -8,27 +8,15 @@ arch=('x86_64')
 url="https://ente.io/auth"
 license=('AGPL-3.0-or-later')
 depends=(
-	'at-spi2-core'
-	'ayatana-ido'
-	'cairo'
-	'fontconfig'
-	'gcc-libs'
-	'gdk-pixbuf2'
-	'glib2'
-	'glibc'
-	'gtk3'
-	'harfbuzz'
-	'hicolor-icon-theme'
 	'libayatana-appindicator'
-	'libayatana-indicator'
 	'libsecret'
 	'libsodium-1.0.18'
-	'libepoxy'
-	'libdbusmenu-glib'
-	'pango'
+	'org.freedesktop.secrets'
 	'xdg-user-dirs'
-	'zenity'
-	'zlib'
+)
+optdepends=(
+	# https://github.com/ente-io/ente/issues/4414
+	'zenity: Required for importing files'
 )
 install=${pkgname}.install
 source_x86_64=("https://github.com/ente-io/ente/releases/download/auth-v${pkgver}/ente-auth-v${pkgver}-x86_64.deb")
